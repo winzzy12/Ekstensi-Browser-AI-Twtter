@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (!tweet) return;
 
     const tweetText = tweet.innerText;
-    fetch("http://localhost:8000/ai", {
+    fetch("http://159.223.37.124:8000//ai", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: tweetText })
