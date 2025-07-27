@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const GEMINI_API_KEY = "ISI_API_KEY_KAMU";
+const GEMINI_API_KEY = "ISI_API_KEY_KAMU"; // Ganti dengan API key dari aistudio.google.com
 
 app.post("/reply", async (req, res) => {
   const userText = req.body.tweet;
@@ -24,8 +24,11 @@ Keep it short, witty, and in English. Add emojis if appropriate.
       {
         contents: [
           {
-            role: "user",
-            parts: [{ text: funnyPrompt }]
+            parts: [
+              {
+                text: funnyPrompt
+              }
+            ]
           }
         ]
       }
