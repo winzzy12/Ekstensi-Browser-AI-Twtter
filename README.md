@@ -51,10 +51,19 @@ https.createServer(options, app).listen(443, () => {
   console.log("✅ Server jalan di https://YourIP.nip.io");
 });
 ```
-6. Download Extension in repository & Update in Ekstensi (content.js)
+6. Running Server
+```bash
+npm install
+```
+```bash
+node server.js
+```
+
+7. Download Extension in repository & Update in Ekstensi (content.js)
 ```bash
 fetch("https://YourIP.nip.io/reply", {
 ```
-7. Running Exstension (Change Developer mode)
+
+8. Running Exstension (Change Developer mode)
 
 Done
