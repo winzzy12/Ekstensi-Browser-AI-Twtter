@@ -6,29 +6,45 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+const GEMINI_API_KEY = "ISI_API_KEY_KAMU"; // Ganti dengan milikmu
+
 app.post("/ai", async (req, res) => {
   const userText = req.body.text;
+
   const funnyPrompt = `
-Buat balasan lucu dan santai untuk tweet berikut ini:
+Write a funny, casual and clever reply to this tweet:
 "${userText}"
 
-Balasan harus tetap relevan dan membuat orang senyum 😄.
+Keep it short, witty, and in English. Add emojis if appropriate.
 `;
 
   try {
-    const response = await axios.post("http://localhost:11434/api/generate", {
-      model: "llama3",
-      prompt: funnyPrompt,
-      stream: false
-    });
+    const geminiRes = await axios.post(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        contents: [
+          {
+            parts: [
+              {
+                text: funnyPrompt
+              }
+            ]
+          }
+        ]
+      }
+    );
 
-    res.json({ reply: response.data.response.trim() });
-  } catch (error) {
-    console.error("Error contacting LLaMA:", error);
-    res.status(500).json({ reply: "😅 Wah, AI-nya lagi bobo kayaknya..." });
+    const reply =
+      geminiRes.data.candidates?.[0]?.content?.parts?.[0]?.text ??
+      "Oops, no reply generated 😅";
+
+    res.json({ reply: reply.trim() });
+  } catch (err) {
+    console.error("Gemini Error:", err?.response?.data || err.message);
+    res.status(500).json({ reply: "Error getting reply from Gemini 😓" });
   }
 });
 
 app.listen(8000, () => {
-  console.log("🤖 AI server listening at http://localhost:8000");
+  console.log("⚡ Gemini AI Server running on http://localhost:8000");
 });
