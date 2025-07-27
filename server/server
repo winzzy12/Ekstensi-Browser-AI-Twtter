@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const GEMINI_API_KEY = "AIzaSyCqLkCm_KCDnla0HQD_p7qK_nx44jKc2wo"; // Ganti dengan API key dari aistudio.google.com
+const GEMINI_API_KEY = "API-KEY"; // Ganti dengan API key dari aistudio.google.com
 
 app.post("/reply", async (req, res) => {
   const userText = req.body.tweet;
