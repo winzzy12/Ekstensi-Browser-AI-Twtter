@@ -6,10 +6,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const GEMINI_API_KEY = "ISI_API_KEY_KAMU"; // Ganti dengan milikmu
+const GEMINI_API_KEY = "ISI_API_KEY_KAMU";
 
-app.post("/ai", async (req, res) => {
-  const userText = req.body.text;
+app.post("/reply", async (req, res) => {
+  const userText = req.body.tweet;
 
   const funnyPrompt = `
 Write a funny, casual and clever reply to this tweet:
@@ -20,15 +20,12 @@ Keep it short, witty, and in English. Add emojis if appropriate.
 
   try {
     const geminiRes = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
       {
         contents: [
           {
-            parts: [
-              {
-                text: funnyPrompt
-              }
-            ]
+            role: "user",
+            parts: [{ text: funnyPrompt }]
           }
         ]
       }
